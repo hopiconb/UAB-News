@@ -79,6 +79,7 @@ function Authentication() {
             sx={{
               fontWeight: "bold",
               fontSize: "1.5em",
+              color: theme.palette.primary.main,
             }}
           >
             Login
@@ -130,6 +131,7 @@ function Authentication() {
             sx={{
               fontWeight: "bold",
               fontSize: "1.5em",
+              color: theme.palette.primary.main,
             }}
           >
             Register
