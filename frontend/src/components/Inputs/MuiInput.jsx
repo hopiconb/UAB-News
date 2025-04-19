@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-function MuiInput({ size, label, type, inputIcon, borderColor }) {
+export default function MuiInput({ size, label, type, inputIcon, borderColor }) {
   const [showPassword, setShowPassword] = useState(true);
   const [inputType, setInputType] = useState(type ? type : "text");
 
@@ -32,7 +32,7 @@ function MuiInput({ size, label, type, inputIcon, borderColor }) {
             borderColor: borderColor,
           },
         },
-        "& .MuiInputLabel-root.Mui-focused": {
+        "& .MuiInputLabel-root.Mui-focused": { 
           color: borderColor,
         },
         "& .MuiInputLabel-root": {
@@ -68,5 +68,3 @@ function MuiInput({ size, label, type, inputIcon, borderColor }) {
     />
   );
 }
-
-export default MuiInput;
