@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import theme from "../../Themes/theme.jsx";
 
-export default function MuiInput({ size, label, type, inputIcon, borderColor }) {
-  const [showPassword, setShowPassword] = useState(true);
-  const [inputType, setInputType] = useState(type ? type : "text");
+export default function MuiInput({
+  size,
+  label,
+  type,
+  inputIcon,
+  borderColor,
+  onChange,
+  value,
+  width,
+  fullWidth,
+}) {
+  const [showPassword, setShowPassword] = useState(type === "password");
+  const [inputType, setInputType] = useState(type || "text");
 
   const switchType = () => {
-    setShowPassword(!showPassword);
-    if (showPassword) {
-      setInputType("text");
-    } else {
-      setInputType("password");
-    }
+    setShowPassword((prev) => !prev);
+    setInputType((prev) => (prev === "password" ? "text" : "password"));
   };
 
   return (
@@ -21,7 +28,11 @@ export default function MuiInput({ size, label, type, inputIcon, borderColor }) 
       label={label}
       type={inputType}
       variant="outlined"
-      fullWidth={true}
+      width={width}
+      fullWidth={fullWidth}
+      onChange={onChange}
+      value={value}
+      // required={true}
       sx={{
         "& .MuiOutlinedInput-root": {
           borderRadius: ".2em",
@@ -32,7 +43,7 @@ export default function MuiInput({ size, label, type, inputIcon, borderColor }) 
             borderColor: borderColor,
           },
         },
-        "& .MuiInputLabel-root.Mui-focused": { 
+        "& .MuiInputLabel-root.Mui-focused": {
           color: borderColor,
         },
         "& .MuiInputLabel-root": {
@@ -54,9 +65,9 @@ export default function MuiInput({ size, label, type, inputIcon, borderColor }) 
                 }}
               >
                 {showPassword ? (
-                  <VisibilityOff sx={{ color: borderColor }} />
+                  <VisibilityOff sx={{ color: theme.palette.primary.main }} />
                 ) : (
-                  <Visibility sx={{ color: borderColor }} />
+                  <Visibility sx={{ color: theme.palette.primary.main }} />
                 )}
               </IconButton>
             ) : (

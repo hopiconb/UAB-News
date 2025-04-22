@@ -28,6 +28,7 @@ function MuiButton({
   value,
   variant,
   width,
+  maxWidth,
 }) {
   return (
     <Button
@@ -52,6 +53,7 @@ function MuiButton({
         cursor: cursor,
         minWidth: minWidth,
         flex: flex,
+        maxWidth: maxWidth,
 
         "&:focus": {
           outline: outline,

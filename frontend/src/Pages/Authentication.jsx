@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { Box, styled, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Button, styled, Typography } from "@mui/material";
 import MuiInput from "../components/Inputs/MuiInput.jsx";
-import PersonIcon from "@mui/icons-material/Person";
 import MuiButton from "../components/Buttons/MuiButton.jsx";
 import EmailIcon from "@mui/icons-material/Email";
+import ClearIcon from "@mui/icons-material/Clear";
 import theme from "../Themes/theme.jsx";
+import { fetchLoginUser } from "../Services/FetchUser.js";
+import { useNavigate } from "react-router-dom";
 
 const MainBox = styled(Box)({
   width: "100%",
@@ -56,24 +58,69 @@ const LoginBox = styled(Box)(({ display }) => ({
   gap: "1em",
 }));
 
-const RegisterBox = styled(Box)(({ display }) => ({
+const Exit = styled(Typography)({
   width: "100%",
-  height: "auto",
-  backfaceVisibility: "hidden",
-  transform: "rotateY(180deg)",
-  display: display ? "flex" : "none",
-  flexDirection: "column",
-  justifyContent: "start",
-  alignItems: "center",
-  gap: "1em",
-}));
+  display: "flex",
+  justifyContent: "end",
+  cursor: "pointer",
+});
 
 function Authentication() {
+  const navigate = useNavigate();
+
   const [register, setRegister] = useState(false);
+  const [emailLoginInput, setEmailLoginInput] = useState("");
+  const [passwordLoginInput, setPasswordLoginInput] = useState("");
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    // Check if the user is already logged in
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      // Optionally, you can verify the token with the backend
+      console.log("User is already logged in");
+      navigate("/"); // Redirect to the home page
+    } else {
+      navigate("/auth"); // Redirect to the login page
+    }
+  }, [navigate]);
+
+  function getEmailLogin(e) {
+    setEmailLoginInput(e.target.value);
+  }
+  function getPasswordLogin(e) {
+    setPasswordLoginInput(e.target.value);
+  }
+
+  function handleLogin() {
+    fetchLoginUser(emailLoginInput, passwordLoginInput).then((result) => {
+      if (result.message === "User not found") {
+        setDisplay(1);
+      } else if (result.message === "Invalid credentials") {
+        setDisplay(2);
+      } else {
+        navigate("/");
+      }
+    });
+  }
+
+  function handleRegister() {}
 
   return (
     <MainBox>
       <AuthBox flip={register}>
+        <Exit>
+          <MuiButton
+            value={<ClearIcon />}
+            border={"none"}
+            outline={"none"}
+            color={theme.palette.primary.main}
+            onClick={() => {
+              navigate("/");
+            }}
+          />
+        </Exit>
         <LoginBox display={register}>
           <Typography
             sx={{
@@ -83,99 +130,40 @@ function Authentication() {
           >
             Login
           </Typography>
-
-          <MuiInput
-            type={"text"}
-            size={"small"}
-            label={"Username"}
-            inputIcon={
-              <PersonIcon sx={{ color: theme.palette.primary.main }} />
-            }
-            borderColor={theme.palette.primary.main}
-          />
-          <MuiInput
-            type={"password"}
-            size={"small"}
-            label={"Password"}
-            borderColor={theme.palette.primary.main}
-          />
-
-          <MuiButton
-            height={"2em"}
-            width={"100%"}
-            outline={"none"}
-            border={"none"}
-            backgroundColor={theme.palette.success.main}
-            backgroundColorHover={theme.palette.success.contrastText}
-            color={theme.palette.primary.main}
-            value={"Login"}
-            fontWeight={"bold"}
-          />
-
-          <MuiButton
-            height={"2em"}
-            width={"100%"}
-            outline={"none"}
-            border={"none"}
-            backgroundColor={theme.palette.success.dark}
-            backgroundColorHover={theme.palette.success.light}
-            color={theme.palette.primary.main}
-            value={"Register"}
-            fontWeight={"bold"}
-            onClick={() => setRegister(!register)}
-          />
-        </LoginBox>
-        <RegisterBox display={register}>
           <Typography
-            sx={{
-              fontWeight: "bold",
-              fontSize: "1.5em",
-            }}
+            sx={{ color: "red", display: display === 1 ? "flex" : "none" }}
           >
-            Register
+            Utilizator inexistent!
           </Typography>
-
-          <MuiInput
-            type={"text"}
-            size={"small"}
-            label={"Last name"}
-            inputIcon={
-              <PersonIcon sx={{ color: theme.palette.primary.main }} />
-            }
-            borderColor={theme.palette.primary.main}
-          />
-
-          <MuiInput
-            type={"text"}
-            size={"small"}
-            label={"First name"}
-            inputIcon={
-              <PersonIcon sx={{ color: theme.palette.primary.main }} />
-            }
-            borderColor={theme.palette.primary.main}
-          />
-
-          <MuiInput
-            type={"text"}
-            size={"small"}
-            label={"Username"}
-            inputIcon={
-              <PersonIcon sx={{ color: theme.palette.primary.main }} />
-            }
-            borderColor={theme.palette.primary.main}
-          />
+          <Typography
+            sx={{ color: "red", display: display === 2 ? "flex" : "none" }}
+          >
+            Parola gresita!
+          </Typography>
           <MuiInput
             type={"text"}
             size={"small"}
             label={"Email"}
+            onChange={getEmailLogin}
             inputIcon={<EmailIcon sx={{ color: theme.palette.primary.main }} />}
-            borderColor={theme.palette.primary.main}
+            borderColor={
+              display === 0
+                ? theme.palette.primary.main
+                : theme.palette.error.main
+            }
+            value={emailLoginInput}
           />
           <MuiInput
             type={"password"}
             size={"small"}
             label={"Password"}
-            borderColor={theme.palette.primary.main}
+            onChange={getPasswordLogin}
+            borderColor={
+              display === 0
+                ? theme.palette.primary.main
+                : theme.palette.error.main
+            }
+            value={passwordLoginInput}
           />
 
           <MuiButton
@@ -186,23 +174,11 @@ function Authentication() {
             backgroundColor={theme.palette.success.main}
             backgroundColorHover={theme.palette.success.contrastText}
             color={theme.palette.primary.main}
-            value={"Register"}
-            fontWeight={"bold"}
-          />
-
-          <MuiButton
-            height={"2em"}
-            width={"100%"}
-            outline={"none"}
-            border={"none"}
-            backgroundColor={theme.palette.success.dark}
-            backgroundColorHover={theme.palette.success.light}
-            color={theme.palette.primary.main}
             value={"Login"}
             fontWeight={"bold"}
-            onClick={() => setRegister(!register)}
+            onClick={handleLogin}
           />
-        </RegisterBox>
+        </LoginBox>
       </AuthBox>
     </MainBox>
   );
