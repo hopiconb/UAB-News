@@ -43,13 +43,13 @@ function EditPosts() {
   }
 
   function editPost(e) {
-    navigate("/admin/edit-post-page", { state: { article: e } });
+    navigate("/admin/edit-article-page", { state: { article: e } });
   }
 
   return (
     <MainBoxR sx={{ height: "auto" }} ismobile={isMobile ? "true" : undefined}>
       <Typography variant="h4" gutterBottom>
-        Editează postările tale
+        Editează articolele tale
       </Typography>
 
       <Grid container spacing={3}>

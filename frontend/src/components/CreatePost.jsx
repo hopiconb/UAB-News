@@ -4,6 +4,7 @@ import {
   Box,
   styled,
   TextareaAutosize,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -11,6 +12,7 @@ import theme from "../Themes/theme.jsx";
 import FileUploadMUI from "./Inputs/FileUploadMUI.jsx";
 import { fetchArticleUpload } from "../Services/FetchArticle.js";
 import MuiButton from "./Buttons/MuiButton.jsx";
+import MuiInput from "./Inputs/MuiInput.jsx";
 
 const CreatePostBox = styled(Box)({
   width: "100%",
@@ -34,9 +36,14 @@ const InformationInput = styled(TextareaAutosize)({
 
 function CreatePost() {
   const userId = localStorage.getItem("userId");
+  const datex = new Date();
+  const day = datex.getDate();
+  const month = datex.getMonth() + 1;
+  const year = datex.getFullYear();
+  const currenDate = `${day}/${month}/${year}`;
 
   const [title, setTitle] = useState("Meniu");
-  const [textareaInput, setTextareaInput] = useState("");
+  const [textareaInput, setTextareaInput] = useState(currenDate);
   const [author, setAuthor] = useState(userId);
   const [image, setImage] = useState(null);
 
@@ -47,6 +54,10 @@ function CreatePost() {
   const handleImageChange = (file) => {
     setImage(file);
   };
+
+  function getTitle(e) {
+    setTitle(e.target.value);
+  }
 
   const themes = useTheme();
   const isMobile = useMediaQuery(themes.breakpoints.down("sm"));
@@ -70,10 +81,16 @@ function CreatePost() {
   return (
     <MainBoxR ismobile={isMobile ? "true" : undefined}>
       <CreatePostBox>
+        <Typography sx={{ fontWeight: "bold" }}>Creaza articol</Typography>
+        <MuiInput
+          type={"text"}
+          size={"small"}
+          defaultValue={"Meniu"}
+          onChange={getTitle}
+        />
         <InformationInput
           maxRows={4}
           aria-label="maximum height"
-          placeholder="Descriere"
           value={textareaInput}
           onChange={getTextareaInput}
         />

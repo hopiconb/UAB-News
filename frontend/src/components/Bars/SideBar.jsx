@@ -27,8 +27,8 @@ function SideBar({}) {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const icons = {
-    "Creaza Postare": <PostAddIcon />,
-    "Editeaza Postari": <EditIcon />,
+    "Creaza articol": <PostAddIcon />,
+    "Editeaza articole": <EditIcon />,
     Utilizatori: <PeopleIcon />,
     "Adauga utilizator": <PersonAddIcon />,
     Acasa: <HomeIcon />,
@@ -38,12 +38,12 @@ function SideBar({}) {
 
   const handleNavigation = (text) => {
     switch (text) {
-      case "creaza postare":
-        navigate("/admin/create-post");
+      case "creaza articol":
+        navigate("/admin/create-article");
         break;
 
-      case "editeaza postari":
-        navigate("/admin/edit-posts");
+      case "editeaza articole":
+        navigate("/admin/edit-articles");
         break;
       case "utilizatori":
         navigate("/admin/users");
@@ -59,7 +59,7 @@ function SideBar({}) {
   };
 
   useEffect(() => {
-    navigate("/admin/create-post");
+    navigate("/admin/create-article");
   }, []);
 
   return (
@@ -99,8 +99,8 @@ function SideBar({}) {
       <Box sx={{ overflow: "auto" }}>
         <List>
           {[
-            "Creaza Postare",
-            "Editeaza Postari",
+            "Creaza articol",
+            "Editeaza articole",
             "Utilizatori",
             "Adauga utilizator",
             "Acasa",

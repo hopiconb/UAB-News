@@ -4,6 +4,7 @@ import {
   Box,
   styled,
   TextareaAutosize,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -12,6 +13,7 @@ import FileUploadMUI from "./Inputs/FileUploadMUI.jsx";
 import MuiButton from "./Buttons/MuiButton.jsx";
 import { useLocation } from "react-router-dom";
 import { fetchArticleEdit } from "../Services/FetchArticle.js";
+import MuiInput from "./Inputs/MuiInput.jsx";
 const CreatePostBox = styled(Box)({
   width: "100%",
   height: "100%",
@@ -35,6 +37,8 @@ const InformationInput = styled(TextareaAutosize)({
 function EditPostPage() {
   const location = useLocation();
   const article = location.state?.article;
+  const themes = useTheme();
+  const isMobile = useMediaQuery(themes.breakpoints.down("sm"));
 
   const [title, setTitle] = useState(article.title);
   const [textareaInput, setTextareaInput] = useState(article.content);
@@ -47,9 +51,9 @@ function EditPostPage() {
   const handleImageChange = (file) => {
     setImage(file);
   };
-
-  const themes = useTheme();
-  const isMobile = useMediaQuery(themes.breakpoints.down("sm"));
+  function getTitle(e) {
+    setTitle(e.target.value);
+  }
 
   const handleSubmite = async (e) => {
     e.preventDefault();
@@ -68,10 +72,16 @@ function EditPostPage() {
   return (
     <MainBoxR ismobile={isMobile ? "true" : undefined}>
       <CreatePostBox>
+        <Typography sx={{ fontWeight: "bold" }}>Editare articol</Typography>
+        <MuiInput
+          type={"text"}
+          size={"small"}
+          defaultValue={title}
+          onChange={getTitle}
+        />
         <InformationInput
           maxRows={4}
           aria-label="maximum height"
-          placeholder="Descriere"
           value={textareaInput}
           onChange={getTextareaInput}
         />

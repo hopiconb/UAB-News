@@ -18,9 +18,9 @@ function App() {
         <Route path={"/admin"} element={<UserArea />}>
           <Route path={"add-user"} element={<Register />} />
           <Route path={"users"} element={<Users />} />
-          <Route path={"create-post"} element={<CreatePost />} />
-          <Route path={"edit-posts"} element={<EditPosts />} />
-          <Route path={"edit-post-page"} element={<EditPostPage />} />
+          <Route path={"create-article"} element={<CreatePost />} />
+          <Route path={"edit-articles"} element={<EditPosts />} />
+          <Route path={"edit-article-page"} element={<EditPostPage />} />
         </Route>
       </Routes>
     </Router>

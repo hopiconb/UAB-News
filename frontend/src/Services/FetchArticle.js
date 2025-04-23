@@ -13,9 +13,7 @@ export const fetchArticleUpload = async (title, content, author, image) => {
       body: formData,
     });
 
-    const uploadPost = await response.json();
-
-    return uploadPost;
+    return await response.json();
   } catch (error) {
     console.error("Error during article upload:", error);
     alert("A apărut o eroare. Te rugăm să încerci din nou.");
@@ -28,9 +26,7 @@ export const fetchArticleGetRecent = async () => {
       method: "GET",
     });
 
-    const uploadPost = await response.json();
-
-    return uploadPost;
+    return await response.json();
   } catch (error) {
     console.error("Error during article upload:", error);
     alert("A apărut o eroare. Te rugăm să încerci din nou.");
@@ -46,9 +42,7 @@ export const fetchArticleGetById = async (userId) => {
       },
     );
 
-    const getPosts = await response.json();
-
-    return getPosts;
+    return await response.json();
   } catch (error) {
     console.error("Error fetching articles by user ID:", error);
     alert("A apărut o eroare. Te rugăm să încerci din nou.");
@@ -64,9 +58,7 @@ export const fetchArticleDelete = async (postId) => {
       },
     );
 
-    const deletePost = await response.json();
-
-    return deletePost;
+    return await response.json();
   } catch (error) {
     console.error("Error fetching articles by user ID:", error);
     alert("A apărut o eroare. Te rugăm să încerci din nou.");
@@ -90,8 +82,7 @@ export const fetchArticleEdit = async (postId, title, content, image) => {
       },
     );
 
-    const editedPost = await response.json();
-    return editedPost;
+    return await response.json();
   } catch (error) {
     console.error("Error editing article:", error);
     alert("A apărut o eroare. Te rugăm să încerci din nou.");

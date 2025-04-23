@@ -102,6 +102,14 @@ function Register() {
           setDisplay(1);
         } else {
           setDisplay(2);
+          setLastNameInput("");
+          setFirstNameInput("");
+          setEmailInput("");
+          setPasswordInput("");
+          setUsernameInput("");
+          const timeout = setTimeout(() => {
+            setDisplay(0);
+          }, 2000);
         }
       },
     );

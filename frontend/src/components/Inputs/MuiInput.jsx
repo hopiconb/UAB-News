@@ -13,6 +13,7 @@ export default function MuiInput({
   value,
   width,
   fullWidth,
+  defaultValue,
 }) {
   const [showPassword, setShowPassword] = useState(type === "password");
   const [inputType, setInputType] = useState(type || "text");
@@ -32,7 +33,7 @@ export default function MuiInput({
       fullWidth={fullWidth}
       onChange={onChange}
       value={value}
-      // required={true}
+      defaultValue={defaultValue}
       sx={{
         "& .MuiOutlinedInput-root": {
           borderRadius: ".2em",

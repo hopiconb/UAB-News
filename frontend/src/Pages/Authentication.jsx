@@ -144,6 +144,7 @@ function Authentication() {
             type={"text"}
             size={"small"}
             label={"Email"}
+            fullWidth={true}
             onChange={getEmailLogin}
             inputIcon={<EmailIcon sx={{ color: theme.palette.primary.main }} />}
             borderColor={
@@ -156,6 +157,7 @@ function Authentication() {
           <MuiInput
             type={"password"}
             size={"small"}
+            fullWidth={true}
             label={"Password"}
             onChange={getPasswordLogin}
             borderColor={

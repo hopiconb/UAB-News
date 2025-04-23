@@ -67,7 +67,7 @@ function CanteenMenu() {
           )}
         </Box>
       ) : (
-        <Typography variant="body1">Loading recent article...</Typography>
+        <Typography variant="body1">Nu exista niciun articol!</Typography>
       )}
     </Box>
   );
